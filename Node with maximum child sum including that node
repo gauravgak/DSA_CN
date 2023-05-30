@@ -1,0 +1,55 @@
+/************************************************************
+
+    Following is the structure for the TreeNode class
+
+    template <typename T>
+    class TreeNode {
+     public:
+        T data;
+        vector<TreeNode<T>*> children;
+
+        TreeNode(T data) {
+            this->data = data;
+        }
+
+        ~TreeNode() {
+            for (int i = 0; i < children.size(); i++) {
+                delete children[i];
+            }
+        }
+    };
+
+************************************************************/
+
+TreeNode<int>* maxSumNode(TreeNode<int>* root) {
+    // Write your code here
+    if(root==NULL)return NULL;
+    int sum=0;
+    sum+=root->data;
+    TreeNode<int>* ans=root;
+    for(int i=0;i<root->children.size();i++){
+        sum+=root->children[i]->data;
+    }
+    
+    TreeNode<int> *x=root;
+     for(int i=0;i<root->children.size();i++){
+
+         x=maxSumNode(root->children[i]);
+         int xsum=x->data;
+        for(int i=0;i<x->children.size();i++){
+        xsum+=x->children[i]->data;
+    }
+    if(xsum>=sum){
+        sum=xsum;
+        ans=x;
+    }
+
+    }
+   // int xsum=x->data;
+    // for(int i=0;i<x->children.size();i++){
+    //     xsum+=x->children[i]->data;
+    // }
+    
+    return ans;
+   
+}
