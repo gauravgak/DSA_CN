@@ -1,0 +1,39 @@
+/************************************************************
+ 
+    Following is the structure for the TreeNode class
+
+    template <typename T>
+    class TreeNode {
+     public:
+        T data;
+        vector<TreeNode<T>*> children;
+    
+        TreeNode(T data) {
+            this->data = data;
+        }
+    
+        ~TreeNode() {
+            for (int i = 0; i < children.size(); i++) {
+                delete children[i];
+            }
+        }
+    };
+
+************************************************************/
+
+TreeNode<int>* getNextLargerElement(TreeNode<int>* root, int x) {
+    // Write your code here
+    if(root==NULL)return NULL;
+    TreeNode<int>* ans=(root->data>x)?root:NULL;
+    int rootData=(root->data>x)?root->data:99999;
+    for(int i=0;i<root->children.size();i++){
+        TreeNode<int>*xt=getNextLargerElement(root->children[i],x);
+       int newAns=(xt!=NULL)?xt->data:99999;
+        if(newAns>x && newAns<rootData){
+            ans=xt;
+            rootData=newAns;
+        }
+    }
+   // cout<<ans->data<<endl;
+    return ans;
+}
